@@ -12,7 +12,7 @@ const MovieGrid = ({ movies, onSelect }: MovieGridProps) => {
   return (
     <ul className={styles.grid}>
       {movies.map((movie) => {
-        console.log('Movie data:', movie); // Залишаємо для діагностики
+        console.log('Movie data:', movie);
         return (
           <li key={movie.id}>
             <div className={styles.card} onClick={() => onSelect(movie)}>
