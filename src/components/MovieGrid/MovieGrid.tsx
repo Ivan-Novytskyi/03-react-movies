@@ -12,7 +12,7 @@ const MovieGrid = ({ movies, onSelect }: MovieGridProps) => {
   return (
     <ul className={styles.grid}>
       {movies.map((movie) => {
-        console.log('Movie data:', movie); // Додано тут
+        console.log('Movie data:', movie); // Залишаємо для діагностики
         return (
           <li key={movie.id}>
             <div className={styles.card} onClick={() => onSelect(movie)}>
@@ -21,7 +21,7 @@ const MovieGrid = ({ movies, onSelect }: MovieGridProps) => {
                 src={
                   movie.poster_path
                     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                    : 'https://via.placeholder.com/500x750?text=No+Image'
+                    : 'https://placehold.co/500x750?text=No+Image'
                 }
                 alt={movie.title}
                 loading="lazy"
