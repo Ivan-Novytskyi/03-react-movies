@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import { fetchMovies } from '../../services/movieService';
 import type { Movie } from '../../types/movie';
+import MovieGrid from '../MovieGrid/MovieGrid';
 import styles from './App.module.css';
 import toast from 'react-hot-toast';
 
@@ -28,12 +29,7 @@ function App() {
     <div className={styles.app}>
       <h1>Movie Search</h1>
       <SearchBar onSubmit={handleSearch} />
-      {/* Тимчасовий рендер для перевірки */}
-      <div>
-        {movies.map((movie) => (
-          <div key={movie.id}>{movie.title}</div>
-        ))}
-      </div>
+      <MovieGrid movies={movies} onSelect={(movie) => console.log(movie)} />
     </div>
   );
 }
