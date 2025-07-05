@@ -4,15 +4,18 @@ import { fetchMovies } from '../../services/movieService';
 import type { Movie } from '../../types/movie';
 import MovieGrid from '../MovieGrid/MovieGrid';
 import Loader from '../Loader/Loader';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import styles from './App.module.css';
 import toast from 'react-hot-toast';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSearch = async (query: string) => {
-    setIsLoading(true); // Увімкнення Loader
+    setIsLoading(true);
+    setError(null);
     try {
       const results = await fetchMovies(query);
       setMovies(results);
@@ -20,9 +23,9 @@ function App() {
         toast.error('No movies found for your request.');
       }
     } catch {
-      toast.error('There was an error, please try again...');
+      setError('Failed to fetch movies.');
     } finally {
-      setIsLoading(false); // Вимкнення Loader
+      setIsLoading(false);
     }
   };
 
@@ -36,6 +39,8 @@ function App() {
       <SearchBar onSubmit={handleSearch} />
       {isLoading ? (
         <Loader />
+      ) : error ? (
+        <ErrorMessage />
       ) : (
         <MovieGrid movies={movies} onSelect={(movie) => console.log(movie)} />
       )}
