@@ -21,7 +21,7 @@ const MovieGrid = ({ movies, onSelect }: MovieGridProps) => {
                 src={
                   movie.poster_path
                     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                    : 'https://placehold.co/500x750?text=No+Image'
+                    : 'https://placehold.co/500x750?text=No+Image&fontsize=40&bg=333333&fc=ffffff'
                 }
                 alt={movie.title}
                 loading="lazy"
