@@ -3,13 +3,16 @@ import SearchBar from '../SearchBar/SearchBar';
 import { fetchMovies } from '../../services/movieService';
 import type { Movie } from '../../types/movie';
 import MovieGrid from '../MovieGrid/MovieGrid';
+import Loader from '../Loader/Loader';
 import styles from './App.module.css';
 import toast from 'react-hot-toast';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = async (query: string) => {
+    setIsLoading(true); // Увімкнення Loader
     try {
       const results = await fetchMovies(query);
       setMovies(results);
@@ -18,6 +21,8 @@ function App() {
       }
     } catch {
       toast.error('There was an error, please try again...');
+    } finally {
+      setIsLoading(false); // Вимкнення Loader
     }
   };
 
@@ -29,7 +34,11 @@ function App() {
     <div className={styles.app}>
       <h1>Movie Search</h1>
       <SearchBar onSubmit={handleSearch} />
-      <MovieGrid movies={movies} onSelect={(movie) => console.log(movie)} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <MovieGrid movies={movies} onSelect={(movie) => console.log(movie)} />
+      )}
     </div>
   );
 }
