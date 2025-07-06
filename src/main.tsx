@@ -3,7 +3,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './components/App/App.tsx';
 import { fetchMovies } from './services/movieService';
-import { Toaster } from 'react-hot-toast';
+
 (async () => {
   try {
     const movies = await fetchMovies('action');
@@ -16,6 +16,6 @@ import { Toaster } from 'react-hot-toast';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
-    <Toaster /> {}
+    {}
   </StrictMode>
 );

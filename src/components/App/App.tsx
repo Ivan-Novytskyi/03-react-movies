@@ -8,6 +8,7 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import MovieModal from '../MovieModal/MovieModal';
 import styles from './App.module.css';
 import toast from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -15,7 +16,15 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const handleSearch = async (query: string) => {
+  const handleSearch = async (formData: FormData) => {
+    const query = formData.get('query')?.toString() || '';
+    if (!query.trim()) {
+      toast.error('Please enter your search query.', {
+        duration: 4000,
+      });
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     setMovies([]);
@@ -53,8 +62,8 @@ function App() {
 
   return (
     <div className={styles.app}>
-      {}
-      <SearchBar onSubmit={handleSearch} />
+      <SearchBar action={handleSearch} />
+      <Toaster /> {}
       {isLoading ? (
         <Loader />
       ) : error ? (
