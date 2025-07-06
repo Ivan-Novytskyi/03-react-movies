@@ -53,7 +53,7 @@ function App() {
 
   return (
     <div className={styles.app}>
-      {/* <h1>Movie Search</h1> Видалено */}
+      {}
       <SearchBar onSubmit={handleSearch} />
       {isLoading ? (
         <Loader />
