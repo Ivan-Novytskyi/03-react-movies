@@ -14,11 +14,11 @@ const MovieModal = ({ movie, onClose }: MovieModalProps) => {
       if (e.key === 'Escape') onClose();
     };
     document.addEventListener('keydown', handleEsc);
-    document.body.style.overflow = 'hidden'; // Заборона скролінгу
+    document.body.style.overflow = 'hidden';
 
     return () => {
       document.removeEventListener('keydown', handleEsc);
-      document.body.style.overflow = ''; // Відновлення скролінгу
+      document.body.style.overflow = '';
     };
   }, [onClose]);
 
