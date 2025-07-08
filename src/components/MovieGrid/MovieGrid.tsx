@@ -11,26 +11,23 @@ const MovieGrid = ({ movies, onSelect }: MovieGridProps) => {
 
   return (
     <ul className={styles.grid}>
-      {movies.map((movie) => {
-        console.log('Movie data:', movie);
-        return (
-          <li key={movie.id}>
-            <div className={styles.card} onClick={() => onSelect(movie)}>
-              <img
-                className={styles.image}
-                src={
-                  movie.poster_path
-                    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                    : 'https://placehold.co/500x750?text=No+Image&fontsize=40&bg=333333&fc=ffffff'
-                }
-                alt={movie.title}
-                loading="lazy"
-              />
-              <h2 className={styles.title}>{movie.title}</h2>
-            </div>
-          </li>
-        );
-      })}
+      {movies.map((movie) => (
+        <li key={movie.id}>
+          <div className={styles.card} onClick={() => onSelect(movie)}>
+            <img
+              className={styles.image}
+              src={
+                movie.poster_path
+                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                  : 'https://placehold.co/500x750?text=No+Image&fontsize=40&bg=333333&fc=ffffff'
+              }
+              alt={movie.title}
+              loading="lazy"
+            />
+            <h2 className={styles.title}>{movie.title}</h2>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 };

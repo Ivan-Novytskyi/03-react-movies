@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import { fetchMovies } from '../../services/movieService';
 import type { Movie } from '../../types/movie';
@@ -16,22 +16,32 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const handleSearch = async (query: string) => {
+  const handleSearch = async (formData: FormData): Promise<void> => {
+    if (!formData) {
+      toast.error('Form data is unavailable.', { duration: 4000 });
+      return;
+    }
+
+    const query = formData.get('query')?.toString() || '';
+    if (!query.trim()) {
+      toast.error('Please enter your search query.', {
+        duration: 4000,
+      });
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     setMovies([]);
-    console.log('Search query:', query);
     try {
       const results = await fetchMovies(query);
-      console.log('Fetch results:', results);
       setMovies(results);
       if (results.length === 0) {
         toast.error('No movies found for your request.', {
           duration: 4000,
         });
       }
-    } catch (err) {
-      console.error('Fetch error:', err);
+    } catch {
       setError(
         'Failed to fetch movies. Please check your connection or try again later.'
       );
@@ -48,13 +58,9 @@ function App() {
     setSelectedMovie(null);
   };
 
-  useEffect(() => {
-    setMovies([]);
-  }, []);
-
   return (
     <div className={styles.app}>
-      <SearchBar onSubmit={handleSearch} /> {}
+      <SearchBar action={handleSearch} />
       <Toaster />
       {isLoading ? (
         <Loader />
