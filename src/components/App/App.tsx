@@ -16,7 +16,14 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
-  const handleSearch = async (query: string): Promise<void> => {
+  const handleSearch = async (formData: FormData): Promise<void> => {
+    const query = formData.get('query')?.toString() || '';
+    if (!query.trim()) {
+      toast.error('Please enter your search query.', {
+        duration: 4000,
+      });
+      return;
+    }
     setIsLoading(true);
     setError(null);
     setMovies([]);
@@ -47,7 +54,7 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <SearchBar onSubmit={handleSearch} />
+      <SearchBar action={handleSearch} /> {}
       <Toaster />
       {isLoading ? (
         <Loader />
